@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Scheduler</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Monthly Staff Scheduler</h1>
+      <p>Create constraint-aware rosters for locations L &amp; C.</p>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card" id="config-section">
+      <h2>Calendar &amp; Rules</h2>
+      <div class="grid">
+        <label>
+          Month
+          <input type="month" id="month-input" />
+        </label>
+        <label>
+          Max new joiners per shift
+          <input type="number" id="new-joiner-limit" min="0" max="5" value="1" />
+        </label>
+      </div>
+      <div class="config-rows">
+        <div>
+          <h3>Closures</h3>
+          <form id="closure-form">
+            <label>
+              Date
+              <input type="date" id="closure-date" required />
+            </label>
+            <label>
+              Location
+              <select id="closure-location">
+                <option value="all">All Locations</option>
+                <option value="L">Location L</option>
+                <option value="C">Location C</option>
+              </select>
+            </label>
+            <button type="submit">Add Closure</button>
+          </form>
+          <ul id="closure-list" class="tag-list"></ul>
+        </div>
+        <div>
+          <h3>Taiwan Legal Holidays</h3>
+          <form id="holiday-form">
+            <label>
+              Date
+              <input type="date" id="holiday-date" required />
+            </label>
+            <button type="submit">Add Holiday</button>
+          </form>
+          <ul id="holiday-list" class="tag-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="staff-section">
+      <h2>Staff Pool</h2>
+      <form id="staff-form" class="grid">
+        <label>
+          Name
+          <input type="text" id="staff-name" required />
+        </label>
+        <label>
+          Weekly cap (hrs)
+          <input type="number" id="staff-weekly" min="1" value="40" />
+        </label>
+        <label>
+          Monthly cap (optional)
+          <input type="number" id="staff-monthly" min="1" placeholder="Auto" />
+        </label>
+        <label>
+          Allowed locations
+          <select id="staff-locations" multiple data-multi-select data-placeholder="Select locations">
+            <option value="L" selected>Location L</option>
+            <option value="C" selected>Location C</option>
+          </select>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" id="staff-new-joiner" />
+          New joiner
+        </label>
+        <label>
+          Skill score (1-5)
+          <input type="number" id="staff-skill" min="1" max="5" value="3" />
+        </label>
+        <label>
+          Weekday shift preferences
+          <select id="staff-weekday-preferences" multiple data-multi-select data-placeholder="No weekday preference">
+            <option value="morning">Avoid Monday–Friday morning</option>
+            <option value="afternoon">Avoid Monday–Friday afternoon</option>
+            <option value="night">Avoid Monday–Friday night</option>
+          </select>
+        </label>
+        <label>
+          Weekend shift preferences
+          <select id="staff-weekend-preferences" multiple data-multi-select data-placeholder="No weekend preference">
+            <option value="morning">Avoid Saturday/Sunday morning</option>
+            <option value="afternoon">Avoid Saturday/Sunday afternoon</option>
+            <option value="night">Avoid Saturday/Sunday night</option>
+          </select>
+        </label>
+        <label>
+          Preferred location
+          <select id="staff-preferred-location">
+            <option value="any" selected>No preference</option>
+            <option value="L">Prefer Location L</option>
+            <option value="C">Prefer Location C</option>
+          </select>
+        </label>
+        <button type="submit">Add Staff</button>
+      </form>
+      <div id="staff-list" class="staff-list"></div>
+    </section>
+
+    <section class="card" id="actions-section">
+      <button id="generate-btn" class="primary">Generate Schedule</button>
+      <button id="clear-results" class="ghost">Clear Results</button>
+      <p id="status-message"></p>
+    </section>
+
+    <section class="card" id="results-section">
+      <h2>Schedule</h2>
+      <div id="results"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
